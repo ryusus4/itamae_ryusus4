@@ -1,4 +1,5 @@
 USER = node['user']
+DOCKER_COMPOSE_VERSION = node['docker']['docker-compose']['version']
 
 package 'apt-transport-https'
 package 'ca-certificates'
@@ -11,5 +12,5 @@ package 'docker-ce'
 
 execute "gpasswd -a #{USER} docker"
 
-execute 'curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+execute "curl -L 'https://github.com/docker/compose/releases/download/#{DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)' -o /usr/local/bin/docker-compose"
 execute 'chmod +x /usr/local/bin/docker-compose'

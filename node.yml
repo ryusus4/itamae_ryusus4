@@ -2,3 +2,7 @@ user: ryusus4
 rbenv:
   global:
     2.6.5
+docker:
+  docker-compose:
+    version:
+      1.24.0
