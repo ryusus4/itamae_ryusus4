@@ -1,0 +1,4 @@
+user: ryusus4
+rbenv:
+  global:
+    2.6.5
