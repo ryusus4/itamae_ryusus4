@@ -1,3 +1,5 @@
+require './modules/file_line_addable.rb'
+
 USER = node['user']
 RUBY_VERSION = node['rbenv']['global']
 
@@ -26,15 +28,4 @@ execute "fish -c 'rbenv global #{RUBY_VERSION} && rbenv rehash' && eval \"$(rben
   user USER
 end
 
-file ".config/fish/config.fish" do
-  action :create
-  user USER
-  content "status --is-interactive; and source (rbenv init -|psub)"
-end
-# file ".config/fish/config.fish" do
-#   action :edit
-#   user USER
-#   block do |content|
-#     content << "\nstatus --is-interactive; and source (rbenv init -|psub)" unless content.include?("rbenv init -|psub")
-#   end
-# end
+add_file_line(path: '.config/fish/config.fish', user: USER, line: 'status --is-interactive; and source (rbenv init -|psub)')
