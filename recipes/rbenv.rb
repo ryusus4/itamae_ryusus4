@@ -16,7 +16,7 @@ execute 'git clone https://github.com/sstephenson/ruby-build.git /usr/local/.rbe
   not_if "find /usr/local/.rbenv/plugins/ruby-build"
 end
 
-execute 'fish -c "set -x RBENV_ROOT /usr/local/.rbenv\nexport"'
+execute "fish -c 'set -x RBENV_ROOT /usr/local/.rbenv\nexport'"
 execute 'fish -c "set -U fish_user_paths /usr/local/.rbenv/bin $fish_user_paths"' do
   not_if 'fish -c "echo $PATH" | grep "/usr/local/.rbenv/bin"'
 end
