@@ -12,5 +12,7 @@ package 'docker-ce'
 
 execute "gpasswd -a #{USER} docker"
 
-execute "curl -L 'https://github.com/docker/compose/releases/download/#{DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)' -o /usr/local/bin/docker-compose"
+execute "curl -L \"https://github.com/docker/compose/releases/download/#{DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose" do
+  not_if "find /usr/local/bin/docker-compose"
+end
 execute 'chmod +x /usr/local/bin/docker-compose'

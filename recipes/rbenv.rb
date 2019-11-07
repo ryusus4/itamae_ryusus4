@@ -8,24 +8,27 @@ package 'build-essential'
 package 'libssl-dev'
 package 'libreadline-dev'
 package 'zlib1g-dev'
+package 'libmysqlclient-dev'
 
-execute 'git clone https://github.com/sstephenson/rbenv.git /usr/local/.rbenv' do
-  not_if "find /usr/local/.rbenv"
+git ".rbenv" do
+  user USER
+  repository 'https://github.com/sstephenson/rbenv.git'
 end
-execute 'git clone https://github.com/sstephenson/ruby-build.git /usr/local/.rbenv/plugins/ruby-build && bash /usr/local/.rbenv/plugins/ruby-build/install.sh' do
-  not_if "find /usr/local/.rbenv/plugins/ruby-build"
+git ".rbenv/plugins/ruby-build" do
+  user USER
+  repository 'https://github.com/sstephenson/ruby-build.git'
 end
 
-execute "fish -c 'set -x RBENV_ROOT /usr/local/.rbenv\nexport'"
-execute 'fish -c "set -U fish_user_paths /usr/local/.rbenv/bin $fish_user_paths"' do
-  not_if 'fish -c "echo $PATH" | grep "/usr/local/.rbenv/bin"'
+execute 'fish -c "set -U fish_user_paths ~/.rbenv/bin $fish_user_paths"' do
+  user USER
+  not_if 'fish -c "echo $PATH" | grep "~/.rbenv/bin"'
 end
 
 execute "fish -c 'rbenv install -s #{RUBY_VERSION}'" do
   user USER
 end
-execute "fish -c 'rbenv global #{RUBY_VERSION} && rbenv rehash' && eval \"$(rbenv init -)\"" do
+execute "fish -c 'rbenv global #{RUBY_VERSION} && rbenv rehash'" do
   user USER
 end
 
-add_file_line(path: '.config/fish/config.fish', user: USER, line: 'status --is-interactive; and source (rbenv init -|psub)')
+add_file_line(path: '.config/fish/config.fish', user: USER, line: 'status --is-interactive && source (rbenv init -|psub)')
