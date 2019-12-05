@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cd ~/five/server
 NOWCOMMIT=`git rev-parse HEAD`
 git reset --hard HEAD
 git add -A --all

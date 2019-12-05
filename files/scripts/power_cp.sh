@@ -7,15 +7,12 @@ if [ $# -ne 2 ]; then
 fi
 
 echo $1から$2まで
-
 git log $1^..$2 --pretty=format:'%h %Cgreen%ad %Cblue%cn %Creset%s' --date=short
 
-
-echo -n “cherry-pickしますか? [yes/no]”
+echo -n 'cherry-pickしますか? [y/n]'
 read answer
 
-
-case $ANSWER in
+case $answer in
     "" | "Y" | "y" | "yes" | "Yes" | "YES" ) git cherry-pick $1^..$2;;
-    * ) echo "NO!!";;
+    * ) echo "中断";;
 esac

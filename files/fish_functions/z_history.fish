@@ -5,7 +5,7 @@ function z_history
     set peco_flags --layout=bottom-up --query "$argv"
   end
 
-  history|peco $peco_flags|read foo
+  builtin history --show-time='%Y/%m/%d %H:%M:%S   ' | peco $peco_flags |  awk '{ gsub(/^([0-9]|\/)* ([0-9]|\:)*   /, ""); print }' | read foo
 
   if [ $foo ]
     commandline $foo
